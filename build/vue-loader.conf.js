@@ -1,20 +1,16 @@
 'use strict'
 const utils = require('./utils')
-const config = require('../config')
 const isProduction = process.env.NODE_ENV === 'production'
-const sourceMapEnabled = isProduction
-  ? config.build.productionSourceMap
-  : config.dev.cssSourceMap
-
 
 module.exports = {
   loaders: utils.cssLoaders({
-    sourceMap: sourceMapEnabled,
-    extract: false
+    sourceMap: true,
+    extract: isProduction
   }),
-  cssSourceMap: sourceMapEnabled,
+  cssSourceMap: true,
+  cacheBusting: true,
   transformToRequire: {
-    video: 'src',
+    video: ['src', 'poster'],
     source: 'src',
     img: 'src',
     image: 'xlink:href'
